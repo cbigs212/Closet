@@ -1,0 +1,36 @@
+public class closetDriver
+{
+    public static void main (String[] args)
+    {
+        Closet favoriteSneakers = new Closet ("sneakers", "beige", "adidas", 2023, false); // this shows how I create an object of the class
+        
+        System.out.println(favoriteSneakers); // this shows the toString() method
+        
+        System.out.println(favoriteSneakers.getColor()); // this shows that the getter methods work
+        
+        // these two lines show how the setter methods work and can change variables of the instance
+        favoriteSneakers.setColor("white");
+        System.out.println(favoriteSneakers.getColor());
+        
+        System.out.println(favoriteSneakers.describe()); // this shows that the describe() method works
+        
+        // this is showing how the whichToWear() method works
+        System.out.println("");
+        Closet oldSneakers = new Closet ("sneakers", "black", "nike", 2022, true); 
+        System.out.println(oldSneakers.whichToWear(favoriteSneakers)); // whichToWear() picked the white sneakers because the conditionals matched
+        oldSneakers.setYearPurchased(2023);
+        oldSneakers.setWornBefore(false);
+        System.out.println(oldSneakers.whichToWear(favoriteSneakers)); // this picks randomly between the two because the first two conditionals are not met
+        
+        // shows the isDuplicate() method
+        System.out.println("");
+        Closet whiteTee = new Closet ("shirt", "white", "nike", 2022, true);
+        Closet whiteTee2 = new Closet ("shirt", "white", "nike", 2022, true);
+        System.out.println(whiteTee.isDuplicate(whiteTee2)); // prints the return statement
+        System.out.println(whiteTee2); // shows that the duplicate tee is now a different color
+        System.out.println(whiteTee); // shows that the original stayed unchanged
+        // the items compared below are no longer duplicates, so the statement will say they are not duplicates
+        System.out.println(whiteTee.isDuplicate(whiteTee2)); // showing when two that are not duplicates are compared
+         
+    }
+}
