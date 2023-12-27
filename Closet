@@ -1,0 +1,179 @@
+/**
+ * 
+ * The class "Closet" represents someone's wardrobe / closet and the 
+ * instances of the class are different pieces in that closet. This could be
+ * used by someone who is interested in fashion and has a large wardrobe
+ * that they need to keep track of. This class allows them to keep a log of 
+ * what is in their closet.
+ * 
+ *
+ * @author (Carly Bigelow)
+ * @version (13 December 2023)
+ */
+public class Closet
+{
+    // instance variables
+    
+    private String article; // the article of clothing - (shirt, pants, sneakers, etc.)
+    private String color; // what color is it? - (black, blue, red, etc.)
+    private String brand; // what brand is it? - (lululemon, aritzia, etc.)
+    private int yearPurchased; // when was it bought? - (2020, 2023, etc.)
+    private boolean wornBefore; // have you worn it before? (true/false)
+    
+    // the 2 constructor methods:
+    
+    // initializing the variables with a parameterized constuctor
+    public Closet(String article, String color, String brand, int yearPurchased, boolean wornBefore) // parameters
+    {
+        this.article = article; // using "this." so we do not need to create new variable names
+        this.color = color;
+        this.brand = brand;
+        this.yearPurchased = yearPurchased;
+        this.wornBefore = wornBefore;
+    }
+    // initializing the variables with a default constructor
+    public Closet () // no parameters
+    {
+        // making all the variables be a default or null value
+        article = "";
+        color = "";
+        brand = "";
+        yearPurchased = 0;
+        wornBefore = false;
+    }
+
+    
+    // the setter methods, so we can easily change variables of the instances of the class
+    
+    public void setArticle(String article) // takes in the parameter, but does not return anything
+    {
+        this.article = article; // redefines the existing variable and changes it to what it took in (using "this." so we do not need to create new variable names)
+    }
+    
+    public void setColor(String color)
+    {
+        this.color = color;
+    }
+    
+    public void setBrand(String brand) 
+    {
+        this.brand = brand; 
+    }
+    
+    public void setYearPurchased(int yearPurchased)
+    {
+        this.yearPurchased = yearPurchased;
+    }
+    
+    public void setWornBefore(boolean wornBefore)
+    {
+        this.wornBefore = wornBefore;
+    }
+    
+    // the getter methods, so we can easily access variables of the class
+    
+    public String getArticle() // does not take in any parameters
+    {
+        return article; // returns the variable that you want to access
+    }
+    
+    public String getColor()
+    {
+        return color;
+    }
+    
+    public String getBrand()
+    {
+        return brand;
+    }
+    
+    public int getYearPurchased()
+    {
+        return yearPurchased;
+    }
+    
+    public boolean getWornBefore()
+    {
+        return wornBefore;
+    }
+    
+    public String toString()
+    {
+        // instead of returning true or false, I changed the boolean into a statement for the toString() method
+        String worn = "";
+        if (wornBefore == true) // if it has been worn, it returns this statement
+        {
+            worn = ("has been worn before.");
+        }
+        else
+        {
+            worn = ("has not been worn before.");
+        }
+        
+        return ("The piece is " + brand + " " + article + " and is " +  // the toString() return statement
+                    color + ". Bought in " + yearPurchased + " and " + worn); // worn is printed based on whether wornBefore is true or false
+    }
+    
+    public String describe() // this is similar to the toString() method, but only gives the color and article of clothing
+    { // this method is used in the whichToWear() method
+        return (color + " " + article);
+    }
+    
+    public String whichToWear (Closet otherItem) // this method has the closet decide for the user what to wear when given the choice of two items
+    {
+        // the method bases the choice on if its been worn and is newer
+        // the closet then returns a statement telling them what to wear
+        if (yearPurchased > otherItem.getYearPurchased() && wornBefore == false)
+        {
+            return "You should wear the " + describe();
+        }
+        
+        else if (yearPurchased < otherItem.getYearPurchased() && otherItem.getWornBefore() == false)
+        {
+            return "You should wear the " + otherItem.describe();
+        }
+        
+        // if neither of these conditionals apply, the closet makes a random decision for the user, using the math class's random method
+        else
+        {
+            double choice = ((Math.random()) * 2.0); // multiplying by two to give the program 2 options
+            if ((int)choice == 1) // the choice can be either 1 or 2
+            {
+                return "You should wear the " + otherItem.describe();
+            }
+            else // the other possible value is 2 (there is an even probability between the two)
+            {
+                return "You should wear the " + describe();
+            }
+        }
+    }
+    
+    // this method could be a boolean, but I made it more user friendly and had it return a string instead
+    public String isDuplicate(Closet otherItem) // this method compares two articles to test if they are identical
+    {
+        // if the article, brand, and color is the same, then they are duplicates
+        if (color == otherItem.getColor() && article == otherItem.getArticle() && brand == otherItem.getBrand())
+        {
+            // if they are duplicates, the closet exchanges one of the items for a different color, to get rid of the duplicate item
+            // the closet will also set it to not having been worn before, and purchased in 2023, since it is new
+            otherItem.setYearPurchased(2023);
+            otherItem.setWornBefore(false);
+            if (color == "white") // changes the item to a neutral color (black or white)
+            {
+                otherItem.setColor("black");
+            }
+            else
+            {
+                otherItem.setColor("white");
+            }
+            // it also will return a statement telling the user the result of the test
+            return ("Oh no... you have two of the same thing. But it is okay, I just exchanged the duplicate for a different color!");
+        }
+        else // the else is for when the items are not identitcal, and nothing needs to be changed
+        {
+            return ("No duplicate items here!");
+        }
+    }
+    
+
+}
